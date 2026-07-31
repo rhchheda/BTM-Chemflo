@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BTM CHEMFLO - Dealer/Client Portal">
+  <meta name="theme-color" content="#0A1428">
+
+  <title>BTM CHEMFLO - Dealer Portal</title>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="shared-styles.css">
+
+  <style>
+    /* Dealer Theme - Blue Focus */
+    :root {
+      --primary-color: var(--color-primary-blue);
+      --accent-color: var(--color-primary-orange);
+    }
+
+    /* Header Styling */
+    #presentation-header {
+      background: linear-gradient(135deg, var(--color-primary-blue) 0%, #0D0F1B 100%);
+      color: var(--color-primary-white);
+    }
+
+    #presentation-header h1 {
+      color: var(--accent-color);
+    }
+
+    #presentation-header p {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    #exit-btn {
+      color: var(--color-primary-white);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    #exit-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent-color);
+    }
+
+    /* Section Styling */
+    .dealer-section {
+      margin-bottom: var(--spacing-2xl);
+      animation: slideUp var(--transition-slow);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-md);
+      border-bottom: 3px solid var(--accent-color);
+    }
+
+    .section-header-icon {
+      font-size: var(--font-size-2xl);
+      min-width: 40px;
+    }
+
+    .section-header h2 {
+      font-size: var(--font-size-2xl);
+      color: var(--color-primary-blue);
+      margin: 0;
+    }
+
+    .section-description {
+      color: var(--color-gray-dark);
+      font-size: var(--font-size-md);
+      margin: var(--spacing-md) 0;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--spacing-lg);
+      margin: var(--spacing-lg) 0;
+    }
+
+    .card {
+      background: var(--color-primary-white);
+      border: 2px solid var(--color-gray-border);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      border-color: var(--accent-color);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-primary-blue);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card-description {
+      font-size: var(--font-size-base);
+      color: var(--color-gray-dark);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Table Styling */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--spacing-lg) 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .data-table thead {
+      background-color: var(--color-primary-blue);
+      color: var(--color-primary-white);
+    }
+
+    .data-table th {
+      padding: var(--spacing-md) var(--spacing-lg);
+      text-align: left;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-md);
+    }
+
+    .data-table td {
+      padding: var(--spacing-md) var(--spacing-lg);
+      border-bottom: 1px solid var(--color-gray-border);
+    }
+
+    .data-table tbody tr {
+      transition: background-color var(--transition-fast);
+    }
+
+    .data-table tbody tr:hover {
+      background-color: var(--color-gray-light);
+    }
+
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+      display: inline-block;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background-color: var(--color-primary-blue);
+      color: var(--color-primary-white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .btn-primary:hover {
+      background-color: #081420;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background-color: var(--accent-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #E68400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: var(--spacing-md);
+      margin: var(--spacing-lg) 0;
+      flex-wrap: wrap;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--color-primary-blue) 0%, #0D0F1B 100%);
+      color: var(--color-primary-white);
+      padding: var(--spacing-2xl);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--spacing-2xl);
+      text-align: center;
+      animation: slideUp var(--transition-slow);
+    }
+
+    .hero h1 {
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--spacing-md);
+      color: var(--accent-color);
+    }
+
+    .hero p {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--spacing-lg);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Loading State */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-2xl);
+      color: var(--color-gray-dark);
+      font-size: var(--font-size-lg);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid var(--color-gray-border);
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: var(--spacing-md);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: var(--font-size-2xl);
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-group {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .data-table {
+        font-size: var(--font-size-sm);
+      }
+
+      .data-table th, .data-table td {
+        padding: var(--spacing-sm);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD SPLASH SCREEN -->
+  <div id="password-splash" class="show">
+    <div class="password-splash-content">
+      <h1>BTM CHEMFLO</h1>
+      <p>Dealer & Client Portal</p>
+      <p style="font-size: var(--font-size-sm); color: var(--color-gray-dark); margin-bottom: var(--spacing-md);">
+        Enter password to access our dealer portal
+      </p>
+
+      <form id="auth-form">
+        <input
+          type="password"
+          id="password-input"
+          placeholder="Password"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="auth-submit-btn">Access Portal</button>
+      </form>
+
+      <p style="margin-top: var(--spacing-lg); font-size: var(--font-size-sm); color: var(--color-gray-dark);">
+        Password-protected access
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN PRESENTATION -->
+  <div id="presentation">
+    <!-- HEADER -->
+    <header id="presentation-header">
+      <div>
+        <h1>BTM CHEMFLO</h1>
+        <p>Dealer & Client Portal</p>
+      </div>
+
+      <div style="display: flex; gap: var(--spacing-md);">
+        <button id="exit-btn" onclick="exitPresentation()" style="
+          padding: var(--spacing-md) var(--spacing-lg);
+          background: transparent;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          font-size: var(--font-size-base);
+          transition: all var(--transition-fast);
+        ">
+          Exit
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main id="presentation-content">
+
+      <!-- SECTION 1: HERO -->
+      <section class="dealer-section">
+        <div class="hero">
+          <h1>Reliable Pumps for Your Industry</h1>
+          <p>Over 60 years of proven excellence, trusted by industry leaders worldwide</p>
+          <div class="btn-group" style="justify-content: center;">
+            <button class="btn-primary btn-secondary" onclick="scrollToSection('products')">View Products</button>
+            <button class="btn-primary" onclick="scrollToSection('pricing')">View Pricing</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: INDUSTRIES -->
+      <section class="dealer-section">
+        <div class="section-header">
+          <span class="section-header-icon">🏭</span>
+          <h2>Industries We Serve</h2>
+        </div>
+        <p class="section-description">
+          Proven reliability across six major industries with specialized pump solutions
+        </p>
+        <div class="card-grid" id="industries-grid">
+          <!-- Populated by dealer-logic.js -->
+        </div>
+      </section>
+
+      <!-- SECTION 3: PRODUCTS -->
+      <section class="dealer-section" id="products">
+        <div class="section-header">
+          <span class="section-header-icon">⚙️</span>
+          <h2>Product Catalog</h2>
+        </div>
+        <p class="section-description">
+          Comprehensive range of pump solutions for diverse industrial applications
+        </p>
+        <div id="products-container" class="loading">
+          <div class="spinner"></div>
+          <span>Loading products...</span>
+        </div>
+      </section>
+
+      <!-- SECTION 4: TECHNICAL SPECIFICATIONS -->
+      <section class="dealer-section">
+        <div class="section-header">
+          <span class="section-header-icon">📊</span>
+          <h2>Technical Specifications</h2>
+        </div>
+        <p class="section-description">
+          Detailed specifications for each pump type available for download
+        </p>
+        <div class="btn-group">
+          <button class="btn-primary" onclick="downloadSpecSheet('centrifugal')">
+            📥 Centrifugal Pumps
+          </button>
+          <button class="btn-primary" onclick="downloadSpecSheet('submersible')">
+            📥 Submersible Pumps
+          </button>
+          <button class="btn-primary" onclick="downloadSpecSheet('slurry')">
+            📥 Slurry Pumps
+          </button>
+          <button class="btn-primary" onclick="downloadSpecSheet('gear')">
+            📥 Gear Pumps
+          </button>
+        </div>
+      </section>
+
+      <!-- SECTION 5: PRICING & DISCOUNTS -->
+      <section class="dealer-section" id="pricing">
+        <div class="section-header">
+          <span class="section-header-icon">💰</span>
+          <h2>Pricing & Volume Discounts</h2>
+        </div>
+        <p class="section-description">
+          Competitive pricing with volume discounts for bulk orders
+        </p>
+        <div id="pricing-container" class="loading">
+          <div class="spinner"></div>
+          <span>Loading pricing...</span>
+        </div>
+      </section>
+
+      <!-- SECTION 6: DEALER PROGRAM -->
+      <section class="dealer-section">
+        <div class="section-header">
+          <span class="section-header-icon">🤝</span>
+          <h2>Dealer Program Benefits</h2>
+        </div>
+        <p class="section-description">
+          Exclusive benefits for our dealer and channel partners
+        </p>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <div class="card-title">Attractive Margins</div>
+            <div class="card-description">
+              Competitive margin structure with volume incentives
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📍</div>
+            <div class="card-title">Territory Rights</div>
+            <div class="card-description">
+              Exclusive distribution rights in your territory
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📚</div>
+            <div class="card-title">Training Programs</div>
+            <div class="card-description">
+              Comprehensive technical and sales training
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">📢</div>
+            <div class="card-title">Marketing Support</div>
+            <div class="card-description">
+              Co-marketing initiatives and promotional materials
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Lead Generation</div>
+            <div class="card-description">
+              Qualified leads and sales support from our team
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⭐</div>
+            <div class="card-title">Priority Support</div>
+            <div class="card-description">
+              Dedicated account manager and technical support
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: SUPPORT & SERVICE -->
+      <section class="dealer-section">
+        <div class="section-header">
+          <span class="section-header-icon">🛠️</span>
+          <h2>Support & Service</h2>
+        </div>
+        <p class="section-description">
+          Comprehensive support to ensure your success
+        </p>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-icon">📞</div>
+            <div class="card-title">24/7 Technical Support</div>
+            <div class="card-description">
+              Round-the-clock technical assistance for urgent issues
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔧</div>
+            <div class="card-title">Installation Guides</div>
+            <div class="card-description">
+              Detailed PDFs and video tutorials for installation
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">⏱️</div>
+            <div class="card-title">SLA Guarantees</div>
+            <div class="card-description">
+              Warranty coverage and service level agreements
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🔩</div>
+            <div class="card-title">Spare Parts</div>
+            <div class="card-description">
+              Quick availability of genuine replacement parts
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 8: CALL TO ACTION -->
+      <section class="dealer-section" style="text-align: center; padding: var(--spacing-2xl); background: var(--color-gray-light); border-radius: var(--radius-lg);">
+        <h2 style="color: var(--color-primary-blue); margin-bottom: var(--spacing-lg);">Ready to Partner With Us?</h2>
+        <p style="color: var(--color-gray-dark); margin-bottom: var(--spacing-lg); font-size: var(--font-size-md);">
+          Join our network of successful dealers and distributors
+        </p>
+        <div class="btn-group" style="justify-content: center;">
+          <button class="btn-primary btn-secondary" onclick="contactSales()">
+            📧 Contact Sales Team
+          </button>
+          <button class="btn-primary" onclick="requestQuote()">
+            💼 Request Quote
+          </button>
+          <button class="btn-primary btn-secondary" onclick="accessPortal()">
+            🔐 Access Order Portal
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="presentation-footer">
+      <p>© 2024 BTM Process Controls Pvt Ltd. All rights reserved.</p>
+      <p>Last updated: <span id="last-update">Never</span> |
+         <a href="#" onclick="sharePresentation()" style="color: var(--color-primary-orange); text-decoration: none;">Share</a> |
+         <a href="#" onclick="downloadPresentation()" style="color: var(--color-primary-orange); text-decoration: none;">Download</a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="toast-notifications.js"></script>
+
+  <script>
+    // SET API URL (CRITICAL)
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxlgrHzjL22v__NWoEfc5JPNsjuDuq_-MUpxnAkeVYTuLdmPa98wLM3JLHf4A_Eqx1I/exec';
+  </script>
+
+  <script src="api-handler.js"></script>
+  <script src="auth-system.js"></script>
+
+  <!-- Dealer-specific logic -->
+  <script src="dealer-logic.js"></script>
+
+  <script>
+    // Scroll to section with smooth behavior
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        toastInfo('Scrolling to section...', 1000);
+      }
+    }
+
+    // Button handlers (stubs - to be filled in dealer-logic.js)
+    function downloadSpecSheet(type) {
+      toastInfo(`Downloading ${type} specifications...`, 2000);
+    }
+
+    function contactSales() {
+      toastSuccess('Opening email client to contact sales team...', 2000);
+      // In real implementation, open email or contact form
+    }
+
+    function requestQuote() {
+      toastInfo('Request quote feature coming soon', 3000);
+    }
+
+    function accessPortal() {
+      toastInfo('Redirecting to order portal...', 2000);
+      // window.location.href = 'https://portal.btmprocess.com';
+    }
+
+    function sharePresentation() {
+      const url = window.location.href;
+      if (navigator.share) {
+        navigator.share({
+          title: 'BTM CHEMFLO - Dealer Portal',
+          url: url
+        });
+      } else {
+        copyToClipboard(url);
+        toastSuccess('Link copied to clipboard!', 2000);
+      }
+    }
+
+    function downloadPresentation() {
+      toastInfo('Preparing presentation for download...', 2000);
+      // Could generate PDF or HTML file
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('Dealer presentation loading...');
+      await initializeData();
+    });
+  </script>
+
+</body>
+</html>
