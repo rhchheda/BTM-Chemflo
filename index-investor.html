@@ -1,1111 +1,683 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="BTM CHEMFLO - Investor Presentation">
-    <meta name="theme-color" content="#FF9500">
-    <title>BTM CHEMFLO - Investor Presentation</title>
-    <link rel="stylesheet" href="shared-styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-orange: #FF9500;
-            --primary-blue: #0A1428;
-            --accent-blue: #4A90E2;
-            --success-green: #2D8B56;
-            --danger-red: #E74C3C;
-            --light-bg: #F0F4F8;
-            --dark-bg: #0F1419;
-            --text-light: #E8EEF5;
-            --text-dark: #1A2332;
-            --border-color: rgba(255, 149, 0, 0.2);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #1a2f4d 100%);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(20px); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Header */
-        header {
-            background: rgba(10, 20, 40, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 3px solid var(--primary-orange);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-        }
-
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin-left: 2.5rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        nav a:hover {
-            color: var(--primary-orange);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.08) 0%, rgba(74, 144, 226, 0.08) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            right: -15%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(255, 149, 0, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .hero-content {
-            flex: 1;
-            z-index: 2;
-            max-width: 600px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .hero-highlight {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: rgba(232, 238, 245, 0.9);
-            margin-bottom: 3rem;
-            animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
-            font-weight: 500;
-        }
-
-        /* KPI Grid - HYPERLINKED */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .kpi-card {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(255, 149, 0, 0.08) 100%);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            position: relative;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .kpi-card:hover {
-            border-color: var(--primary-orange);
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(255, 149, 0, 0.2);
-        }
-
-        .kpi-number {
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-
-        .kpi-label {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
-        }
-
-        .kpi-description {
-            font-size: 0.9rem;
-            color: rgba(232, 238, 245, 0.75);
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .kpi-link {
-            display: inline-block;
-            color: var(--primary-orange);
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 2px solid var(--primary-orange);
-            transition: all 0.3s;
-        }
-
-        .kpi-link:hover {
-            transform: translateX(5px);
-        }
-
-        /* Section Styling */
-        section {
-            padding: 6rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        section h2 {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            margin-bottom: 4rem;
-            text-align: center;
-            position: relative;
-            padding-bottom: 2rem;
-            font-weight: 800;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
-            border-radius: 3px;
-        }
-
-        /* Trust Signals Section */
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .trust-card {
-            background: linear-gradient(135deg, rgba(45, 139, 86, 0.15), rgba(74, 144, 226, 0.1));
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all 0.4s;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .trust-card:hover {
-            border-color: var(--success-green);
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(45, 139, 86, 0.15);
-        }
-
-        .trust-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .trust-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            color: var(--success-green);
-        }
-
-        /* Testimonials Carousel */
-        .testimonials-container {
-            position: relative;
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.08), rgba(74, 144, 226, 0.08));
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .testimonial {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s;
-            text-align: center;
-        }
-
-        .testimonial.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .testimonial-quote {
-            font-size: 1.2rem;
-            font-style: italic;
-            color: rgba(232, 238, 245, 0.9);
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
-        }
-
-        .testimonial-author {
-            font-weight: 700;
-            color: var(--primary-orange);
-            margin-bottom: 0.3rem;
-        }
-
-        .testimonial-meta {
-            font-size: 0.9rem;
-            color: rgba(232, 238, 245, 0.6);
-        }
-
-        .carousel-nav {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .carousel-btn {
-            background: var(--primary-orange);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            margin: 0 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .carousel-btn:hover {
-            background: var(--accent-blue);
-            transform: scale(1.05);
-        }
-
-        /* Case Studies - Tabbed */
-        .case-studies-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .tab-button {
-            background: transparent;
-            border: 2px solid var(--border-color);
-            color: var(--text-light);
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-        }
-
-        .tab-button.active {
-            background: var(--primary-orange);
-            border-color: var(--primary-orange);
-            color: white;
-        }
-
-        .tab-button:hover {
-            border-color: var(--primary-orange);
-        }
-
-        .case-study-item {
-            display: none;
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-        }
-
-        .case-study-item.active {
-            display: block;
-        }
-
-        .case-study-card {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(255, 149, 0, 0.08));
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-        }
-
-        .case-study-card:hover {
-            border-color: var(--primary-orange);
-            transform: translateX(5px);
-            box-shadow: 0 15px 30px rgba(255, 149, 0, 0.15);
-        }
-
-        .case-study-challenge {
-            font-weight: 600;
-            color: var(--danger-red);
-            margin-bottom: 0.8rem;
-        }
-
-        .case-study-solution {
-            font-weight: 600;
-            color: var(--primary-orange);
-            margin-bottom: 0.8rem;
-        }
-
-        .case-study-results {
-            font-weight: 600;
-            color: var(--success-green);
-            margin-bottom: 0.8rem;
-        }
-
-        /* Financial Charts */
-        .chart-container {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(255, 149, 0, 0.05));
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            position: relative;
-            height: 400px;
-        }
-
-        .chart-title {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-orange);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a2f4d 0%, #0F1419 100%);
-            padding: 3rem;
-            border-radius: 20px;
-            border: 2px solid var(--primary-orange);
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideInUp 0.4s ease-out;
-        }
-
-        .modal-header {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary-orange);
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--primary-orange);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            transform: rotate(90deg);
-            color: var(--accent-blue);
-        }
-
-        .modal-body {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-light);
-        }
-
-        /* Team Grid */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .team-card {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(255, 149, 0, 0.08));
-            border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .team-card:hover {
-            border-color: var(--primary-orange);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 149, 0, 0.15);
-        }
-
-        .team-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .team-position {
-            font-size: 1rem;
-            color: var(--primary-orange);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-
-        .team-meta {
-            font-size: 0.85rem;
-            color: rgba(232, 238, 245, 0.7);
-        }
-
-        /* Roadmap Timeline */
-        .roadmap-item {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(255, 149, 0, 0.08));
-            border-left: 5px solid var(--primary-orange);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-            animation: slideInUp 0.8s ease-out;
-        }
-
-        .roadmap-item:hover {
-            border-left-color: var(--accent-blue);
-            transform: translateX(10px);
-            box-shadow: 0 10px 20px rgba(255, 149, 0, 0.1);
-        }
-
-        .roadmap-timeline {
-            font-weight: 700;
-            color: var(--primary-orange);
-            margin-bottom: 0.5rem;
-        }
-
-        .roadmap-initiative {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, rgba(255, 149, 0, 0.15), rgba(74, 144, 226, 0.15));
-            border: 2px solid var(--primary-orange);
-            border-radius: 20px;
-            padding: 4rem 2rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .cta-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-        }
-
-        .cta-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .cta-button {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--accent-blue) 100%);
-            color: white;
-            padding: 1.2rem 2rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 149, 0, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(10, 20, 40, 0.95);
-            border-top: 3px solid var(--primary-orange);
-            padding: 3rem 2rem;
-            text-align: center;
-            color: rgba(232, 238, 245, 0.7);
-            font-size: 0.95rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            nav a {
-                margin-left: 0;
-            }
-
-            .modal-content {
-                padding: 2rem;
-            }
-
-            .cta-buttons {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTM CHEMFLO - Investor Presentation</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <style>
+    :root {
+      --primary-orange: #FF9500;
+      --primary-blue: #0A1428;
+      --success: #4CAF50;
+      --error: #F44336;
+      --gray-light: #F5F5F5;
+      --gray-border: #DDD;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    /* PASSWORD SPLASH */
+    #password-splash {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .password-splash-content {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .password-splash-content h1 {
+      color: var(--primary-orange);
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .password-splash-content p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    #password-input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--gray-border);
+      border-radius: 6px;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    #password-input:focus {
+      outline: none;
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(255,149,0,0.1);
+    }
+
+    #auth-submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-orange);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #auth-submit-btn:hover {
+      background: #E68400;
+    }
+
+    /* TOAST NOTIFICATIONS */
+    #toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10000;
+      max-width: 400px;
+    }
+
+    .toast {
+      background: white;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-left: 4px solid #999;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .toast.success { border-left-color: var(--success); color: var(--success); }
+    .toast.error { border-left-color: var(--error); color: var(--error); }
+    .toast.info { border-left-color: var(--primary-orange); color: var(--primary-orange); }
+
+    @keyframes slideIn {
+      from { transform: translateX(420px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, var(--primary-orange) 0%, #E68400 100%);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: white;
+      font-size: 24px;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    #exit-btn {
+      padding: 10px 20px;
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* CONTENT */
+    #presentation {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-orange) 0%, #E68400 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: var(--primary-orange);
+      border-bottom: 3px solid var(--primary-orange);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .kpi-card {
+      background: white;
+      border: 2px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .kpi-card:hover {
+      border-color: var(--primary-orange);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+
+    .kpi-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--primary-orange);
+      margin-bottom: 10px;
+    }
+
+    .kpi-label {
+      color: var(--primary-blue);
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--primary-orange);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+
+    .card-title {
+      font-weight: bold;
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .chart-container {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 20px;
+      position: relative;
+      height: 400px;
+      margin: 20px 0;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th {
+      background: var(--primary-blue);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--gray-border);
+    }
+
+    tr:hover {
+      background: var(--gray-light);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background: var(--primary-orange);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #E68400;
+    }
+
+    .btn.secondary {
+      background: var(--primary-blue);
+    }
+
+    .btn.secondary:hover {
+      background: #081420;
+    }
+
+    .testimonial {
+      background: white;
+      border: 1px solid var(--gray-border);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .testimonial-quote {
+      font-size: 16px;
+      font-style: italic;
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+    }
+
+    .testimonial-author {
+      font-weight: bold;
+      color: var(--primary-orange);
+      margin-bottom: 5px;
+    }
+
+    footer {
+      background: var(--gray-light);
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      .charts-grid { grid-template-columns: 1fr; }
+      .btn-group { flex-direction: column; }
+      .btn { width: 100%; }
+      header { flex-direction: column; gap: 10px; }
+      .hero h1 { font-size: 24px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
+
+  <!-- PASSWORD SPLASH -->
+  <div id="password-splash" class="show">
+    <div class="password-splash-content">
+      <h1>BTM CHEMFLO</h1>
+      <p>Investor Presentation</p>
+      <form id="auth-form" onsubmit="handleLogin(event)">
+        <input type="password" id="password-input" placeholder="Password" required>
+        <button type="submit" id="auth-submit-btn">Access Presentation</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRESENTATION -->
+  <div id="presentation">
     <header>
-        <div class="header-container">
-            <div class="logo">⚙️ CHEMFLO</div>
-            <nav>
-                <a href="#kpis">Investment Thesis</a>
-                <a href="#trust">Trust & Proof</a>
-                <a href="#financial">Financials</a>
-                <a href="#cases">Success Stories</a>
-                <a href="#roadmap">Roadmap</a>
-                <a href="#cta">Contact</a>
-            </nav>
-        </div>
+      <div>
+        <h1>BTM CHEMFLO</h1>
+        <p>Investor Presentation</p>
+      </div>
+      <button id="exit-btn" onclick="logout()">Exit</button>
     </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>60+ Years of Engineering Excellence. <span class="hero-highlight">Ready to Grow</span></h1>
-            <p>A proven business model with untapped growth potential</p>
-            <button class="cta-button" onclick="document.getElementById('investorBrief').style.display='flex'">📄 Download Investor Brief</button>
+    <main id="presentation-content">
+      <div class="hero">
+        <h1>60+ Years. Ready to Grow</h1>
+        <p>Proven business with clear vision, strong team, and market opportunity</p>
+      </div>
+
+      <section class="section">
+        <h2>📊 Key Metrics</h2>
+        <div class="kpi-grid" id="kpi-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>⏳ Timeline</h2>
+        <div id="timeline-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>💹 Financial Performance</h2>
+        <div class="charts-grid">
+          <div class="chart-container"><canvas id="revenue-chart"></canvas></div>
+          <div class="chart-container"><canvas id="ebitda-chart"></canvas></div>
         </div>
-    </section>
+      </section>
 
-    <!-- KPIs - HYPERLINKED -->
-    <section id="kpis">
-        <div class="container">
-            <h2>Investment Highlights</h2>
-            <div class="kpi-grid" id="kpiContainer">
-                <!-- Populated by JavaScript -->
-            </div>
+      <section class="section">
+        <h2>🎯 Case Studies</h2>
+        <div id="cases-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>⭐ Testimonials</h2>
+        <div id="testimonials-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>👥 Leadership</h2>
+        <div class="card-grid" id="team-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>🏆 Certifications</h2>
+        <div class="card-grid" id="certifications-container"></div>
+      </section>
+
+      <section class="section">
+        <h2>🗺️ Growth Roadmap</h2>
+        <div class="card-grid" id="roadmap-container"></div>
+      </section>
+
+      <section class="section" style="text-align: center; background: linear-gradient(135deg, var(--primary-orange) 0%, #E68400 100%); color: white; padding: 40px; border-radius: 8px;">
+        <h2 style="color: white; border: none; padding: 0; margin-bottom: 20px;">Let's Discuss Investment</h2>
+        <div class="btn-group">
+          <button class="btn" onclick="scheduleCall()">📅 Schedule Call</button>
+          <button class="btn" onclick="downloadDeck()">📥 Download Deck</button>
+          <button class="btn" onclick="contactIR()">📧 Contact IR</button>
         </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Trust & Proof Section -->
-    <section id="trust">
-        <div class="container">
-            <h2>Built on Trust & Proof</h2>
-
-            <!-- Certifications -->
-            <h3 style="font-size: 1.8rem; margin: 3rem 0 2rem; text-align: center;">Certifications & Standards</h3>
-            <div class="trust-grid" id="certificationsContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <!-- Testimonials Carousel -->
-            <h3 style="font-size: 1.8rem; margin: 4rem 0 2rem; text-align: center;">Customer Testimonials</h3>
-            <div class="testimonials-container" id="testimonialsContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Case Studies -->
-    <section id="cases">
-        <div class="container">
-            <h2>Success Stories & ROI</h2>
-            <div class="case-studies-tabs" id="caseTabsContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-            <div id="caseStudiesContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Financial Highlights -->
-    <section id="financial">
-        <div class="container">
-            <h2>Financial Performance</h2>
-            <div class="chart-container">
-                <div class="chart-title">Revenue Growth Trajectory (5-Year)</div>
-                <canvas id="revenueChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-title">Key Financial Metrics</div>
-                <canvas id="metricsChart"></canvas>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team -->
-    <section>
-        <div class="container">
-            <h2>Leadership Team</h2>
-            <div class="team-grid" id="teamContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Roadmap -->
-    <section id="roadmap">
-        <div class="container">
-            <h2>Growth Roadmap</h2>
-            <div id="roadmapContainer">
-                <!-- Populated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section id="cta">
-        <div class="container">
-            <div class="cta-section">
-                <h2 class="cta-title">Ready to Explore This Opportunity?</h2>
-                <div class="cta-buttons">
-                    <button class="cta-button" onclick="document.getElementById('scheduleModal').style.display='flex'">📅 Schedule Call</button>
-                    <button class="cta-button" onclick="downloadInvestorBrief()">📄 Download Deck</button>
-                    <button class="cta-button" onclick="document.getElementById('contactModal').style.display='flex'">💬 Contact Us</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <p>&copy; 2024 BTM Process Controls Pvt. Ltd. | Confidential - For Investors Only</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6;">Live data from Google Sheets • Updated every 5 minutes</p>
+      <p>© 2024 BTM Process Controls. All rights reserved.</p>
+      <p>Last updated: <span id="last-update">Never</span></p>
     </footer>
+  </div>
 
-    <!-- Modals -->
-    <div id="investorBrief" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                Investor Brief
-                <button class="modal-close" onclick="document.getElementById('investorBrief').style.display='none'">×</button>
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxlgrHzjL22v__NWoEfc5JPNsjuDuq_-MUpxnAkeVYTuLdmPa98wLM3JLHf4A_Eqx1I/exec';
+    const SESSION_KEY = 'btm-session-token';
+    const PASSWORD = 'chemflo2024';
+
+    let presentationData = null;
+    let sessionToken = null;
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 4000);
+    }
+
+    async function handleLogin(event) {
+      event.preventDefault();
+      const password = document.getElementById('password-input').value;
+
+      if (password !== PASSWORD) {
+        showToast('❌ Incorrect password', 'error');
+        document.getElementById('password-input').value = '';
+        return;
+      }
+
+      showToast('✅ Access granted!', 'success');
+      sessionToken = 'token-' + Date.now();
+      sessionStorage.setItem(SESSION_KEY, sessionToken);
+
+      setTimeout(() => {
+        document.getElementById('password-splash').style.display = 'none';
+        document.getElementById('presentation').style.display = 'block';
+        loadData();
+      }, 500);
+    }
+
+    function logout() {
+      if (confirm('Exit presentation?')) {
+        sessionStorage.removeItem(SESSION_KEY);
+        sessionToken = null;
+        document.getElementById('presentation').style.display = 'none';
+        document.getElementById('password-splash').style.display = 'flex';
+        document.getElementById('password-input').value = '';
+      }
+    }
+
+    function checkSession() {
+      const saved = sessionStorage.getItem(SESSION_KEY);
+      if (saved) {
+        sessionToken = saved;
+        document.getElementById('password-splash').style.display = 'none';
+        document.getElementById('presentation').style.display = 'block';
+        loadData();
+      }
+    }
+
+    async function loadData() {
+      showToast('📊 Loading presentation data...', 'info');
+
+      try {
+        const response = await fetch(API_URL + '?token=' + sessionToken);
+        presentationData = await response.json();
+
+        if (presentationData.error) {
+          showToast('❌ ' + presentationData.message, 'error');
+          return;
+        }
+
+        renderPresentation();
+        showToast('✅ Presentation loaded successfully', 'success');
+
+      } catch (error) {
+        showToast('❌ Failed to load data', 'error');
+      }
+    }
+
+    function renderPresentation() {
+      // KPIs
+      const kpiContainer = document.getElementById('kpi-container');
+      if (presentationData.kpis) {
+        kpiContainer.innerHTML = presentationData.kpis.map(kpi => `
+          <div class="kpi-card">
+            <div class="kpi-number">${kpi.Number}</div>
+            <div class="kpi-label">${kpi.Label}</div>
+            <div style="font-size: 12px; color: #666;">${kpi.Description}</div>
+          </div>
+        `).join('');
+      }
+
+      // Timeline
+      const timelineContainer = document.getElementById('timeline-container');
+      if (presentationData.timeline) {
+        timelineContainer.innerHTML = presentationData.timeline.map(t => `
+          <div class="card">
+            <div style="color: var(--primary-orange); font-weight: bold; margin-bottom: 10px;">
+              ${t.Year} ${t.Icon || ''}
             </div>
-            <div class="modal-body">
-                <h3 style="margin: 1.5rem 0 1rem; color: var(--primary-orange);">BTM CHEMFLO - Investment Opportunity</h3>
-                <p><strong>Company:</strong> BTM Process Controls Pvt. Ltd.</p>
-                <p><strong>Brand:</strong> CHEMFLO</p>
-                <p><strong>Founded:</strong> 1961 (Associate of Akay Industries since heritage)</p>
-                <p><strong>Headquarters:</strong> Hubballi, Karnataka, India</p>
-                <br>
-                <h4 style="color: var(--primary-orange); margin-top: 1.5rem;">Business Model</h4>
-                <p>We provide engineered pumping solutions for critical process industries. Our competitive advantage lies in deep application knowledge, integrated pump+seal solutions, and proven customer relationships across 60+ years.</p>
-                <br>
-                <h4 style="color: var(--primary-orange);">Market Opportunity</h4>
-                <p>Global industrial pump market growing at 6%+ CAGR. Emerging markets in Asia, Africa expanding rapidly. Digital transformation (IoT, predictive maintenance) opening new revenue streams.</p>
-                <br>
-                <h4 style="color: var(--primary-orange);">Investment Thesis</h4>
-                <p>✓ Stable, predictable revenue from mission-critical applications<br>✓ High switching costs due to integrated solutions<br>✓ Proven management team with industry expertise<br>✓ Clear growth roadmap (geographic expansion, new products, digital)<br>✓ Improving margins through product mix & operational efficiency</p>
-                <br>
-                <p style="text-align: center; margin-top: 2rem;">
-                    <button class="cta-button" onclick="document.getElementById('contactModal').style.display='flex'; document.getElementById('investorBrief').style.display='none'">Request Full Deck</button>
-                </p>
+            <div class="card-title">${t.Title}</div>
+            <div class="card-desc">${t.Description}</div>
+          </div>
+        `).join('');
+      }
+
+      // Financial Charts
+      if (presentationData.financial) {
+        const rev = presentationData.financial.revenue;
+        if (rev) {
+          new Chart(document.getElementById('revenue-chart'), {
+            type: 'line',
+            data: {
+              labels: rev.labels,
+              datasets: [{
+                label: 'Revenue (₹Cr)',
+                data: rev.values,
+                borderColor: '#FF9500',
+                backgroundColor: 'rgba(255,149,0,0.1)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 5
+              }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+          });
+        }
+
+        const ebitda = presentationData.financial.ebitda_margin;
+        if (ebitda) {
+          new Chart(document.getElementById('ebitda-chart'), {
+            type: 'bar',
+            data: {
+              labels: ebitda.labels,
+              datasets: [{
+                label: 'EBITDA Margin (%)',
+                data: ebitda.values,
+                backgroundColor: '#0A1428',
+                borderColor: '#FF9500',
+                borderWidth: 2
+              }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+          });
+        }
+      }
+
+      // Case Studies
+      const casesContainer = document.getElementById('cases-container');
+      if (presentationData.caseStudies) {
+        casesContainer.innerHTML = presentationData.caseStudies.map(cs => `
+          <div class="card">
+            <div style="color: var(--primary-orange); font-weight: bold; margin-bottom: 10px;">${cs.Industry}</div>
+            <div><strong>Challenge:</strong> ${cs.Challenge}</div>
+            <div><strong>Solution:</strong> ${cs.Solution}</div>
+            <div><strong>Results:</strong> ${cs.Results}</div>
+            <div style="background: var(--success); color: white; padding: 10px; border-radius: 6px; margin-top: 10px; font-weight: bold; text-align: center;">ROI: ${cs.ROI}</div>
+          </div>
+        `).join('');
+      }
+
+      // Testimonials
+      const testimonialContainer = document.getElementById('testimonials-container');
+      if (presentationData.testimonials && presentationData.testimonials.length > 0) {
+        const testimonial = presentationData.testimonials[0];
+        testimonialContainer.innerHTML = `
+          <div class="testimonial">
+            <div class="testimonial-quote">"${testimonial.Quote}"</div>
+            <div class="testimonial-author">${testimonial.Author}</div>
+            <div style="font-size: 13px; color: #666;">${testimonial.Role} at ${testimonial.Company}</div>
+          </div>
+        `;
+      }
+
+      // Team
+      const teamContainer = document.getElementById('team-container');
+      if (presentationData.team) {
+        teamContainer.innerHTML = presentationData.team.map(member => `
+          <div class="card">
+            <div class="card-title">${member.Name}</div>
+            <div style="color: var(--primary-orange); font-weight: bold; margin-bottom: 10px;">${member.Position}</div>
+            <div style="font-size: 13px; color: #666;">
+              <strong>${member.Experience}</strong> experience<br>
+              <strong>Expertise:</strong> ${member.Expertise}
             </div>
-        </div>
-    </div>
+          </div>
+        `).join('');
+      }
 
-    <div id="scheduleModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                Schedule a Call
-                <button class="modal-close" onclick="document.getElementById('scheduleModal').style.display='none'">×</button>
-            </div>
-            <div class="modal-body">
-                <p>Select a time that works for you:</p>
-                <p style="margin-top: 1.5rem;">
-                    <a href="https://calendly.com/btm-chemflo" target="_blank" class="cta-button">Open Calendar →</a>
-                </p>
-                <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">Or email us directly: business@btmprocesscontrols.com</p>
-            </div>
-        </div>
-    </div>
+      // Certifications
+      const certContainer = document.getElementById('certifications-container');
+      if (presentationData.certifications) {
+        certContainer.innerHTML = presentationData.certifications.map(cert => `
+          <div class="card">
+            <div style="font-size: 24px; margin-bottom: 10px;">${cert.Icon || '🏆'}</div>
+            <div class="card-title">${cert.Name}</div>
+            <div class="card-desc">${cert.Description}</div>
+          </div>
+        `).join('');
+      }
 
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                Get in Touch
-                <button class="modal-close" onclick="document.getElementById('contactModal').style.display='none'">×</button>
-            </div>
-            <div class="modal-body">
-                <p><strong>BTM Process Controls Pvt. Ltd.</strong></p>
-                <p>Plot No 162/A & 162/B, Gamanagatti Industrial Estate<br>Hubballi, Karnataka 580024, India</p>
-                <br>
-                <p><strong>Phone:</strong> +91 836-2486001 / 2486002</p>
-                <p><strong>Email:</strong> business@btmprocesscontrols.com</p>
-                <p><strong>Website:</strong> www.btmprocesscontrols.com</p>
-                <br>
-                <form id="contactForm" style="margin-top: 2rem;">
-                    <input type="email" placeholder="Your email" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: none;">
-                    <textarea placeholder="Your message" rows="4" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: none; font-family: inherit;"></textarea>
-                    <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </div>
+      // Roadmap
+      const roadmapContainer = document.getElementById('roadmap-container');
+      if (presentationData.roadmap) {
+        roadmapContainer.innerHTML = presentationData.roadmap.map(item => `
+          <div class="card">
+            <div style="color: var(--primary-orange); font-weight: bold; margin-bottom: 10px;">📌 ${item.Timeline}</div>
+            <div class="card-title">${item.Initiative}</div>
+            <div class="card-desc">${item.Impact}</div>
+            <div style="font-size: 13px; color: #666; margin-top: 10px;">Investment: ${item.Investment}</div>
+          </div>
+        `).join('');
+      }
 
-    <!-- Close modal when clicking outside -->
-    <script>
-        window.onclick = function(event) {
-            ['investorBrief', 'scheduleModal', 'contactModal'].forEach(id => {
-                const modal = document.getElementById(id);
-                if (event.target === modal) modal.style.display = 'none';
-            });
-        }
+      document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+    }
 
-        // Configuration
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxlgrHzjL22v__NWoEfc5JPNsjuDuq_-MUpxnAkeVYTuLdmPa98wLM3JLHf4A_Eqx1I/exec';
-        let globalData = {};
-        let currentTestimonialIndex = 0;
-        let currentCaseStudyFilter = 'all';
+    function scheduleCall() { showToast('Opening calendar...', 'info'); }
+    function downloadDeck() { showToast('Preparing deck...', 'info'); }
+    function contactIR() { showToast('Opening email...', 'info'); }
 
-        // Fetch data
-        async function fetchData() {
-            try {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error('Network error');
-                globalData = await response.json();
-                renderAll();
-            } catch (error) {
-                console.error('Fetch error:', error);
-                renderDemo();
-            }
-        }
+    document.addEventListener('DOMContentLoaded', checkSession);
+  </script>
 
-        function renderAll() {
-            renderKPIs();
-            renderCertifications();
-            renderTestimonials();
-            renderCaseStudies();
-            renderTeam();
-            renderRoadmap();
-            initCharts();
-        }
-
-        // Render KPIs with links
-        function renderKPIs() {
-            const container = document.getElementById('kpiContainer');
-            if (!globalData.kpis || !globalData.kpis.length) return;
-
-            container.innerHTML = globalData.kpis.map(kpi => `
-                <div class="kpi-card" onclick="scrollToSection('${kpi.Link || '#'}')">
-                    <div class="kpi-number">${kpi.Number}</div>
-                    <div class="kpi-label">${kpi.Label}</div>
-                    <div class="kpi-description">${kpi.Description}</div>
-                    <a href="#" class="kpi-link">Learn More →</a>
-                </div>
-            `).join('');
-        }
-
-        function scrollToSection(sectionId) {
-            if (sectionId && sectionId !== '#') {
-                const element = document.querySelector(sectionId);
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // Render Certifications
-        function renderCertifications() {
-            const container = document.getElementById('certificationsContainer');
-            if (!globalData.certifications || !globalData.certifications.length) return;
-
-            container.innerHTML = globalData.certifications.map(cert => `
-                <div class="trust-card">
-                    <div class="trust-icon">${cert.Icon}</div>
-                    <div class="trust-title">${cert.Name}</div>
-                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">${cert.Description}</p>
-                    <p style="font-size: 0.85rem; color: rgba(232, 238, 245, 0.6);">${cert.Scope}</p>
-                </div>
-            `).join('');
-        }
-
-        // Render Testimonials with carousel
-        function renderTestimonials() {
-            const container = document.getElementById('testimonialsContainer');
-            if (!globalData.testimonials || !globalData.testimonials.length) return;
-
-            let html = '';
-            globalData.testimonials.forEach((testimonial, idx) => {
-                html += `
-                    <div class="testimonial ${idx === 0 ? 'active' : ''}">
-                        <div class="testimonial-quote">"${testimonial.Quote}"</div>
-                        <div class="testimonial-author">— ${testimonial.Author}</div>
-                        <div class="testimonial-meta">${testimonial.Role}, ${testimonial.Company} (${testimonial.Industry})</div>
-                    </div>
-                `;
-            });
-
-            html += `
-                <div class="carousel-nav">
-                    <button class="carousel-btn" onclick="prevTestimonial()">← Previous</button>
-                    <button class="carousel-btn" onclick="nextTestimonial()">Next →</button>
-                </div>
-            `;
-
-            container.innerHTML = html;
-        }
-
-        function nextTestimonial() {
-            const testimonials = document.querySelectorAll('.testimonial');
-            testimonials[currentTestimonialIndex].classList.remove('active');
-            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
-            testimonials[currentTestimonialIndex].classList.add('active');
-        }
-
-        function prevTestimonial() {
-            const testimonials = document.querySelectorAll('.testimonial');
-            testimonials[currentTestimonialIndex].classList.remove('active');
-            currentTestimonialIndex = (currentTestimonialIndex - 1 + testimonials.length) % testimonials.length;
-            testimonials[currentTestimonialIndex].classList.add('active');
-        }
-
-        // Render Case Studies
-        function renderCaseStudies() {
-            const container = document.getElementById('caseStudiesContainer');
-            const tabContainer = document.getElementById('caseTabsContainer');
-            if (!globalData.caseStudies || !globalData.caseStudies.length) return;
-
-            // Get unique industries
-            const industries = [...new Set(globalData.caseStudies.map(cs => cs.Industry))];
-
-            // Render tabs
-            tabContainer.innerHTML = industries.map(ind => `
-                <button class="tab-button ${ind === industries[0] ? 'active' : ''}" onclick="filterCaseStudies('${ind}')">${ind}</button>
-            `).join('');
-
-            // Render case studies
-            container.innerHTML = globalData.caseStudies.map((cs, idx) => `
-                <div class="case-study-item ${cs.Industry === industries[0] ? 'active' : ''}">
-                    <div class="case-study-card">
-                        <div class="case-study-challenge">🔴 Challenge: ${cs.Challenge}</div>
-                        <div class="case-study-solution">🟠 Solution: ${cs.Solution}</div>
-                        <div class="case-study-results">🟢 Results: ${cs.Results}</div>
-                        <div style="margin-top: 1rem; color: var(--success-green); font-weight: 600;">💰 ROI: ${cs.ROI}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterCaseStudies(industry) {
-            // Update tabs
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            // Update case studies
-            document.querySelectorAll('.case-study-item').forEach(item => item.classList.remove('active'));
-            if (industry === 'all') {
-                document.querySelectorAll('.case-study-item').forEach(item => item.classList.add('active'));
-            } else {
-                globalData.caseStudies.forEach((cs, idx) => {
-                    if (cs.Industry === industry) {
-                        document.querySelectorAll('.case-study-item')[idx].classList.add('active');
-                    }
-                });
-            }
-        }
-
-        // Render Team
-        function renderTeam() {
-            const container = document.getElementById('teamContainer');
-            if (!globalData.team || !globalData.team.length) return;
-
-            container.innerHTML = globalData.team.map(member => `
-                <div class="team-card">
-                    <div class="team-name">${member.Name}</div>
-                    <div class="team-position">${member.Position}</div>
-                    <div class="team-meta">
-                        <p style="margin: 0.5rem 0;">${member.Experience}</p>
-                        <p style="margin: 0.5rem 0;">${member.Expertise}</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render Roadmap
-        function renderRoadmap() {
-            const container = document.getElementById('roadmapContainer');
-            if (!globalData.roadmap || !globalData.roadmap.length) return;
-
-            container.innerHTML = globalData.roadmap.map(item => `
-                <div class="roadmap-item">
-                    <div class="roadmap-timeline">⏱️ ${item.Timeline}</div>
-                    <div class="roadmap-initiative">${item.Initiative}</div>
-                    <p style="margin: 0.5rem 0;"><strong>Impact:</strong> ${item.Impact}</p>
-                    <p style="margin: 0.5rem 0;"><strong>Investment:</strong> ${item.Investment}</p>
-                    <p style="margin: 0.5rem 0;"><strong>Expected Outcome:</strong> ${item['Expected Outcome']}</p>
-                </div>
-            `).join('');
-        }
-
-        // Initialize Charts
-        let revenueChart, metricsChart;
-
-        function initCharts() {
-            if (!globalData.financial) return;
-
-            const revenue = globalData.financial.revenue_crores || globalData.financial['Revenue (₹ Crores)'];
-            const ebitda = globalData.financial.ebitda_margin || globalData.financial['EBITDA Margin (%)'];
-
-            if (revenue) {
-                const ctx1 = document.getElementById('revenueChart').getContext('2d');
-                if (revenueChart) revenueChart.destroy();
-                revenueChart = new Chart(ctx1, {
-                    type: 'line',
-                    data: {
-                        labels: revenue.labels || ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
-                        datasets: [{
-                            label: 'Revenue (₹ Crores)',
-                            data: revenue.values || [45, 52, 62, 74, 89],
-                            borderColor: '#FF9500',
-                            backgroundColor: 'rgba(255, 149, 0, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { labels: { color: '#E8EEF5' } } },
-                        scales: { y: { ticks: { color: '#E8EEF5' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }, x: { ticks: { color: '#E8EEF5' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } } }
-                    }
-                });
-            }
-
-            if (ebitda) {
-                const ctx2 = document.getElementById('metricsChart').getContext('2d');
-                if (metricsChart) metricsChart.destroy();
-                metricsChart = new Chart(ctx2, {
-                    type: 'bar',
-                    data: {
-                        labels: ebitda.labels || ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
-                        datasets: [{
-                            label: 'EBITDA Margin (%)',
-                            data: ebitda.values || [18, 20, 22, 24, 26],
-                            backgroundColor: '#4A90E2'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { labels: { color: '#E8EEF5' } } },
-                        scales: { y: { ticks: { color: '#E8EEF5' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } }, x: { ticks: { color: '#E8EEF5' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } } }
-                    }
-                });
-            }
-        }
-
-        // Demo data fallback
-        function renderDemo() {
-            globalData = {
-                kpis: [
-                    { Number: '60+', Label: 'Years', Description: 'Engineering heritage', Link: '#trust' },
-                    { Number: '6', Label: 'Industries', Description: 'Core sectors served', Link: '#cases' },
-                    { Number: '16', Label: 'Products', Description: 'Engineered solutions', Link: '#' },
-                    { Number: '1', Label: 'Portfolio', Description: 'Integrated advantage', Link: '#roadmap' }
-                ],
-                certifications: [
-                    { Icon: '✅', Name: 'ISO 9001', Description: 'Quality Management', Scope: 'Manufacturing' }
-                ],
-                testimonials: [
-                    { Quote: 'BTM pumps have been reliable for 20+ years', Author: 'Rajesh Kumar', Role: 'Plant Manager', Company: 'Oil Refinery', Industry: 'Oil & Gas' }
-                ],
-                caseStudies: [],
-                team: [],
-                roadmap: [],
-                financial: {}
-            };
-            renderAll();
-        }
-
-        function downloadInvestorBrief() {
-            alert('Download feature: Integrate with your backend to serve PDF');
-        }
-
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', fetchData);
-        setInterval(fetchData, 5 * 60 * 1000);
-    </script>
 </body>
 </html>
