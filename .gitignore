@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# This repo is PUBLIC. Only index.html and README.md belong in it.
+# Everything below either contains the figures or points at them.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Narration speaks the revenue, margin and profit numbers aloud.
+# It belongs in Drive, behind the access gate.
+narration/
+*.mp3
+
+# The workbook IS the confidential data.
+*.xlsx
+*.xls
+*.csv
+
+# Local testing copy — has the API_URL rewritten to the mock and no gate value.
+index_local.html
+mock_server.py
+
+# Build tooling: harmless, but keeps the published repo to the one file that matters.
+build_workbook.py
+make_investor_narration.py
+__pycache__/
+*.pyc
+
+# Apps Script is pasted into the Google editor, not served from here.
+# Keep it out of the public repo so the auth logic and property names aren't published.
+Code.gs
+
+# Never commit an access code or a deployed endpoint by accident.
+.env
+secrets.json
